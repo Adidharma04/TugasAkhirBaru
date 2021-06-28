@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= $title ?></title>
- 
-</head>
-<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -25,124 +16,156 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      
-
+  <!-- Main content -->
+  <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
+        
+        <!-- bagian jumlah -->
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
+          
 
-                <p>Siswa Laki</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>156</h3>
+            <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-info"></i></span>
 
-                <p>Siswa Perempuan</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Jumlah Informasi</span>
+                <span class="info-box-number">
+                  <?php echo $header['informasi'] ?>
+                </span>
               </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>2412</h3>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-calendar"></i></span>
 
-                <p>Total Alumni</p>
+              <div class="info-box-content">
+                <span class="info-box-text">Jumlah Event</span>
+                <span class="info-box-number"><?php echo $header['event'] ?></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>100</h3>
+          <!-- /.col -->
 
-                <p>Pengguna</p>
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Jumlah Loker</span>
+                <span class="info-box-number"><?php echo $header['lowongan'] ?></span>
               </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-graduation-cap"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Jumlah Alumni</span>
+                <span class="info-box-number"><?php echo $record['total_alumni'] ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+
         </div>
         <!-- /.row -->
-        <div class="row">
-          <div class="card bg-light">
-                <div class="card-header text-muted border-bottom-0">
-                  <h2>Profile Akun <?php echo ucfirst($this->session->userdata('sess_level')) ?><h2>
-                  <hr>
-                </div>
-                <div class="card-body pt-0" style="padding-right:200.7px;">
-                  <div class="row">
-                    <div class="col-12">
-                      <h4 class="lead"><b><?php echo ucfirst($this->session->userdata('sess_name')) ?></b></h4>
-                      
-                      <p class="text-muted text-sm"><b>Tanggal Lahir: </b> <?php echo ucfirst($this->session->userdata('sess_tanggal_lahir')) ?></p>
-                      <ul class="ml-4 mb-0 fa-ul text-muted">
-                          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building fa-1x"></i> </span><h6><b>Alamat</b><h6></li>
-                          <span align="justify"> <p ><?php echo ucfirst($this->session->userdata('sess_alamat')) ?></p></span>
-                          
-                          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope fa-1x"></i> </span><h6><b>Email</b><h6></li>
-                          <span align="justify"> <p ><?php echo ucfirst($this->session->userdata('sess_email')) ?></p></span>
-                          
-                          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone fa-1x"></i> </span><h6><b>No telfon</b><h6></li>
-                          <span align="justify"> <p ><?php echo ucfirst($this->session->userdata('sess_telfon')) ?></p></span>
-                          <br>
-                      </ul>
-                    </div>
-                    <div class="col-5 text-center">
-                        
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="text-right">
-                    <a href="<?= base_url() . 'Admin/edit_profile' ?>" class="btn btn-sm btn-primary">
-                      <i class="fas fa-user"></i> Edit Profile
-                    </a>
-                    <a href="<?= base_url() . 'Admin/edit_profile' ?>" class="btn btn-sm btn-primary">
-                      <i class="fas fa-key"></i> Change Password
-                    </a>
-                  </div>
-                </div>
-              </div>
-          </div>
-      </div><!-- /.container-fluid -->
 
-      
+        
+        <!-- bagian statistik -->
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12">
+
+                <div class="card card-body">
+                    <!-- Bagian -->
+                    <div class="row">
+                    
+                        <div class="col-12 col-sm-12 col-md-7">
+                            <h3>Alumni</h3>
+                            <small>Statistik Terkini</small> <br><br>
+
+                            <div class="position-relative mb-4">
+                                <canvas id="tracer-chart" height="200"></canvas>
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-end">
+                                <span class="mr-2">
+                                    <i class="fas fa-square text-primary"></i> Kerja
+                                </span>
+
+                                <span>
+                                    <i class="fas fa-square text-gray"></i> Kuliah
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-5">
+
+                            <?php
+                            
+                                $alumni = $record['total_alumni'];
+                                $percentase_kerja = intval( $record['total_kerja']/$alumni * 100 );
+                                $percentase_kuliah = intval( $record['total_kuliah']/$alumni * 100 );
+                                $percentase_kerjakuliah = intval( $record['total_kerjakuliah']/$alumni * 100 );
+                            ?>
+                            <p class="">
+                                <strong>Rincian Lebih Lanjut</strong> <br>
+                                <small>Histori kerja, kuliah, dan dilakukan dua-duanya</small>
+                            </p>
+                            
+
+                            <div class="progress-group">
+                            Kerja
+                            <span class="float-right"><b><?php echo $record['total_kerja'] ?></b>/<?php echo $alumni ?></span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-success" style="width: <?php echo $percentase_kerja ?>%"></div>
+                            </div>
+                            </div>
+                            <!-- /.progress-group -->
+                            
+                            <div class="progress-group">
+                            Kuliah
+                            <span class="float-right"><b><?php echo $record['total_kuliah'] ?></b>/<?php echo $alumni ?></span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-warning" style="width: <?php echo $percentase_kuliah ?>%"></div>
+                            </div>
+                            </div>
+                            <!-- /.progress-group -->
+
+                            <div class="progress-group">
+                            Kerja dan Kuliah
+                            <span class="float-right"><b><?php echo $record['total_kerjakuliah'] ?></b>/<?php echo $alumni ?></span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-info" style="width: <?php echo $percentase_kerjakuliah ?>%"></div>
+                            </div>
+                            </div>
+
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-</body>
-</html>
+  <br><br>

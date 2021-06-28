@@ -1,142 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $title ?></title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="<?= base_url() . 'assets/Template/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' ?>">
-    <link rel="stylesheet" href="<?= base_url() . 'assets/Template/Admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' ?>">
-    <link rel="stylesheet" href="<?= base_url() . 'assets/Template/Admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' ?>">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?= base_url() . 'assets/Template/Admin/dist/css/adminlte.min.css' ?>">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <link rel="stylesheet" href="<?php echo base_url().'assets/Template/User/academy/style.css';?>">
+    <link rel="icon" href="<?php echo base_url().'assets/Gambar/Website/Title_SMA.png';?>">
+        <script language='JavaScript'>
+            var txt = " Tracer Study - Smanis";
+            var speed = 200;
+            var refresh = null;
+            function action() {
+                document.title = txt;
+                txt = txt.substring(1, txt.length) + txt.charAt(0);
+                refresh = setTimeout("action()", speed);
+            }
+            action();
+        </script>
 </head>
-
-<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Informasi Tentang Perkuliahan</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="<?php echo base_url('siswa/dashboard_siswa') ?>">Home</a></li>
-                            <li class="breadcrumb-item active">Table Informasi</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                                <?php echo $this->session->flashdata('msg') ?>
-                            <br>
-                            <div class="card-header">
-                                <h3 class="card-title">Table Informasi Perkuliahan</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="col-md-3">
-                            </div>
-                            <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Informasi</th>
-                                            <th>Foto</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no = 1; foreach ($information_general as $ig) : ?>
-                                        <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $ig->nama_informasi ?></td>
-                                                <td>
-                                                    <?php if($ig->foto == ""): ?>
-                                                        <img src="<?= base_url('assets/Gambar/Website/default_info.png')?>" style= "width:70px; height:70px;" >
-                                                    <?php else: ?>
-                                                        <img src="<?= base_url('assets/Gambar/Upload/Informasi/') . $ig->foto ?>" style= "width:70px; height:70px;" >
-                                                    <?php endif ?>
-                                                </td>
-                                                        <!-- /.modal-content -->
-                                                        </div>
-                                                        <!-- /.modal-dialog -->
-                                                    </div>
-                                                    <!-- /.modal -->
-                                                </td>
-                                        </tr>
-                                        <?php endforeach ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Informasi</th>
-                                            <th>Foto</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+<body>
+    <!-- ##### Preloader ##### -->
+    <div id="preloader">
+        <i class="circle-preloader"></i>
     </div>
-    <!-- /.content-wrapper -->
+
+    <!-- <Header> -->
+    <?php $this->load->view('Template/siswa/navbar')?>
+
+    <!-- <Body> -->
+    <div class="breadcumb-area bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/breadcumb.jpg';?>);">
+        <div class="bradcumbContent">
+            <h2>Informasi Kuliah Smanis</h2>
+        </div>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Top Popular Courses Area Start ##### -->
+    <div class="top-popular-courses-area mt-50 section-padding-100-70">
+        <div class="container">
+            <div class="row">
+                <?php $no = 1; foreach ($informasi_umum as $ig) : ?>
+                <?php if ($ig->status == "accept") : ?>
+                    <div class="col-12 col-lg-6">
+                        <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
+                            <div class="popular-course-content">
+                                <h5><?= $ig->nama_informasi ?></h5>
+                                <span> Ditambahkan pada |  <?= date('d F Y', strtotime($ig->created_at)) ?></span>
+                                <a href="<?= base_url() . 'siswa/informasi_umum/detail/' . $ig->id_umum ?>" class="btn academy-btn btn-sm">Baca Selengkapnya</a >
+                            </div>
+                            <div class="popular-course-thumb bg-img" style="background-image: url(
+                                <?php if($ig->foto == "") : ?>
+                                <?= base_url('assets/Gambar/Website/default_info.png') ?>
+                                <?php else : ?>
+                                    <?= base_url('assets/Gambar/Upload/Informasi/') . $ig->foto ?>
+                                <?php endif?>);"></div>
+                        </div>
+                    </div>
+                    
+                <?php endif ?>
+                <!-- Single Top Popular Course -->
+                
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Top Popular Courses Area End ##### -->
+
+    <!-- ##### Top Popular Courses Details Area Start ##### -->
+    <div class="popular-course-details-area wow fadeInUp" data-wow-delay="300ms">
+        <div class="single-top-popular-course d-flex align-items-center flex-wrap">
+            <div class="popular-course-content">
+                <h5>[INFORMASI PERKULIAHAN]</h5>
+                <p>Percayalah Setiap ada Kemauan pasti ada jalan. Tetap berusaha dengan maksimal dan selalu berdoa kepada Tuhan Yang Maha Esa.</p>
+            </div>
+            <div class="popular-course-thumb bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/infonya.png';?>);"></div>
+        </div>
+    </div>
+    <!-- ##### CTA Area Start ##### -->
+    <div class="call-to-action-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="cta-content d-flex align-items-center justify-content-between flex-wrap">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Course Area End ##### -->       
+    <!-- <footer> -->
+    <?php $this->load->view('Template/siswa/footer')?>
 </body>
-<!-- jQuery -->
-<script src="<?= base_url("assets/Template/Admin/plugins/jquery/jquery.min.js") ?>"></script>
-<!-- Bootstrap 4 -->
-<script src="<?= base_url("assets/Template/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js") ?>"></script>
-<!-- DataTables  & Plugins -->
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables/jquery.dataTables.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-responsive/js/dataTables.responsive.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-buttons/js/dataTables.buttons.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/jszip/jszip.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/pdfmake/pdfmake.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/pdfmake/vfs_fonts.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-buttons/js/buttons.html5.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-buttons/js/buttons.print.min.js") ?>"></script>
-<script src="<?= base_url("assets/Template/Admin/plugins/datatables-buttons/js/buttons.colVis.min.js") ?>"></script>
-<!-- Page specific script -->
-<script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-</script>
 
 </html>

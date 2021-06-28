@@ -30,7 +30,7 @@
     </div>
 
     <!-- <Header> -->
-    <?php $this->load->view('Template/User/navbar')?>
+    <?php $this->load->view('Template/user/navbar')?>
 
     <!-- <Body> -->
     <!-- ##### Hero Area Start ##### -->
@@ -38,7 +38,7 @@
             <div class="hero-slides owl-carousel">
 
                 <!-- Single Hero Slide -->
-                <div class="single-hero-slide bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/foto1.jpg';?>);">
+                <div class="single-hero-slide bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/home.jpg';?>);">
                     <div class="container h-100">
                         <div class="row h-100 align-items-center">
                             <div class="col-12">
@@ -50,7 +50,7 @@
                 </div>
 
                 <!-- Single Hero Slide -->
-                <div class="single-hero-slide bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/foto2.jpg';?>);">
+                <div class="single-hero-slide bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/home2.jpg';?>);">
                     <div class="container h-100">
                         <div class="row h-100 align-items-center">
                             <div class="col-12">
@@ -111,9 +111,7 @@
                             <i class="icon-id-card"></i>
                         </div>
                         <div class="course-content">
-                            <h4>Success Story of</h4>
-                            <p>Nama Alumni</p>
-                            <p>Deskripsi</p>
+                            <p>Mempermudah alumni saling berkomunikasi</p>
                         </div>
                     </div>
                 </div>
@@ -124,9 +122,7 @@
                             <i class="icon-worldwide"></i>
                         </div>
                         <div class="course-content">
-                        <h4>Success Story of</h4>
-                            <p>Nama Alumni</p>
-                            <p>Deskripsi</p>
+                            <p>Mempermudah alumni berbagi informasi</p>
                         </div>
                     </div>
                 </div>
@@ -137,9 +133,7 @@
                             <i class="icon-map"></i>
                         </div>
                         <div class="course-content">
-                        <h4>Success Story of</h4>
-                            <p>Nama Alumni</p>
-                            <p>Deskripsi</p>
+                            <p>Mempermudah alumni berbagi pengalaman kerja</p>
                         </div>
                     </div>
                 </div>
@@ -150,9 +144,7 @@
                             <i class="icon-like"></i>
                         </div>
                         <div class="course-content">
-                        <h4>Success Story of</h4>
-                            <p>Nama Alumni</p>
-                            <p>Deskripsi</p>
+                            <p>Mempermudah alumni berbagi informasi mengenai perkuliahan</p>
                         </div>
                     </div>
                 </div>
@@ -163,9 +155,7 @@
                             <i class="icon-responsive"></i>
                         </div>
                         <div class="course-content">
-                        <h4>Success Story of</h4>
-                            <p>Nama Alumni</p>
-                            <p>Deskripsi</p>
+                            <p>Mengetahui kegiatan yang diadakan alumni</p>
                         </div>
                     </div>
                 </div>
@@ -176,9 +166,7 @@
                             <i class="icon-message"></i>
                         </div>
                         <div class="course-content">
-                        <h4>Success Story of</h4>
-                            <p>Nama Alumni</p>
-                            <p>Deskripsi</p>
+                            <p>Meningkatkan akreditasi sekolah</p>
                         </div>
                     </div>
                 </div>
@@ -187,7 +175,7 @@
     </div>
     <!-- ##### Course Area End ##### -->       
     <!-- <footer> -->
-    <?php $this->load->view('Template/User/footer')?>
+    <?php $this->load->view('Template/user/footer')?>
 </body>
 
 </html>

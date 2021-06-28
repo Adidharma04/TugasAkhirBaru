@@ -30,10 +30,10 @@
     </div>
 
     <!-- <Header> -->
-    <?php $this->load->view('Template/User/navbar')?>
+    <?php $this->load->view('Template/user/navbar')?>
 
     <!-- <Body> -->
-    <div class="breadcumb-area bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/backgroundevent.jpg';?>);">
+    <div class="breadcumb-area bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/breadcumb.jpg';?>);">
         <div class="bradcumbContent">
             <h2>Event Smanis</h2>
         </div>
@@ -47,7 +47,7 @@
                 <div class="col-12">
                     <div class="section-heading text-center mx-auto wow fadeInUp" data-wow-delay="300ms">
                         <span>Event</span>
-                        <h3>Will be held</h3>
+                        <h3>Yang diadakan : </h3>
                     </div>
                 </div>
             </div>
@@ -60,13 +60,12 @@
                                 <h5><?= $evn->nama_event ?></h5>
                                 <span><?= $evn->lokasi ?>  |  <?= $evn->tanggal_event ?></span>
                                 <p><?= $evn->deskripsi_event ?></p>
-                                <a class="btn academy-btn btn-sm">Detail Event</a>
                             </div>
                             <div class="popular-course-thumb bg-img" style="background-image: url(
                                 <?php if($evn->foto == "") : ?>
                                 <?= base_url('assets/Gambar/Website/default_event.png') ?>
                                 <?php else : ?>
-                                    <?= base_url('assets/Gambar/Upload/event/') . $evn->foto ?>
+                                    <?= base_url('assets/Gambar/Upload/Event/') . $evn->foto ?>
                                 <?php endif?>);"></div>
                         </div>
                     </div>
@@ -87,7 +86,7 @@
                 <h5>[KIPRAH ALUMNI SMANIS]</h5>
                 <p>Percayalah Setiap ada Kemauan pasti ada jalan. Tetap berusaha dengan maksimal dan selalu berdoa kepada Tuhan Yang Maha Esa.</p>
             </div>
-            <div class="popular-course-thumb bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/contohevent2.jpg';?>);"></div>
+            <div class="popular-course-thumb bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/kiprah.png';?>);"></div>
         </div>
     </div>
     <!-- ##### Top Popular Courses Details Area End ##### -->
@@ -142,7 +141,7 @@
                 <div class="col-12">
                     <div class="cta-content d-flex align-items-center justify-content-between flex-wrap">
                         <h3>Ingin menambakan event baru? Klik disini</h3>
-                        <a href="#" class="btn academy-btn">More Event!</a>
+                        <a href="<?= base_url("alumni/event/tambah")?>" class="btn academy-btn">More Event!</a>
                     </div>
                 </div>
             </div>
@@ -150,7 +149,7 @@
     </div>
     <!-- ##### Course Area End ##### -->       
     <!-- <footer> -->
-    <?php $this->load->view('Template/User/footer')?>
+    <?php $this->load->view('Template/user/footer')?>
 </body>
 
 </html>

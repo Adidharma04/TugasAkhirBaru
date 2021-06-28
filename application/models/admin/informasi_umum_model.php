@@ -1,118 +1,196 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class informasi_umum_model extends CI_Model {
+class Informasi_umum_model extends CI_Model {
+    public function tampilDataInformasiUmumUser()
+    {  
+        $this->db->select('informasi_umum.*');
+        $this->db->order_by('created_at', 'DESC');
+        return $this->db->get('informasi_umum')->result();
+    }
+
     public function tampilDataInformasiUmum()
     {  
-        $this->db->select('information_general.*');
-        return $this->db->get('information_general')->result();
-    }
-    
-    public function tambahDataInformasiUmum($upload){
+        $sql = "SELECT 	
+                profile.*, 
+                profil_siswa.*,
+                informasi_umum.id_umum, informasi_umum.nama_informasi, informasi_umum.created_at,informasi_umum.foto, informasi_umum.status
+        
+                FROM informasi_umum
+                
+                LEFT JOIN profil_siswa 
+                ON profil_siswa.id_profile = informasi_umum.id_profile
+                
+                
+                INNER JOIN profile 
+                ON profile.id_profile = informasi_umum.id_profile";
 
-    
+        return $this->db->query( $sql );
+    }
+
+    public function tambahDataInformasiUmum($upload_foto,$upload_berkas){
+
+        
         $id_profile = $this->session->userdata('sess_id_profile');
 
-        $information_general =[
+        $data =[
             'id_profile'                   => $id_profile,
             'nama_informasi'               => $this->input->post('nama_informasi', true),
             'deskripsi_informasi'          => $this->input->post('deskripsi_informasi', true),
-            'status'                       => $this->input->post('status', true),
-            'foto'                         => $upload['file']['file_name'],
-        ];
-        $this->db->insert('information_general', $information_general);
-    }
-    public function upload(){    
-        $config['upload_path'] = './assets/Gambar/Upload/Informasi/';    
-        $config['allowed_types'] = 'jpg|png|jpeg';
+            'status'                       => "accept",
+            'foto'                         => $upload_foto['file'],
+            'berkas'                       => $upload_berkas['file'],
+        ];  
+
+        $this->db->insert('informasi_umum', $data);
+    }   
+
+    public function upload( $type, $size, $name ){    
+        $config['upload_path'] = './assets/Gambar/Upload/Informasi/';  
+        $config['allowed_types'] = $type;
+        $config['max_size']     = $size; // 3 mb
+
         $this->load->library('upload', $config);
+        $this->upload->initialize($config);
 
-        if ( empty( $_FILES['foto']['name'] ) ) {
-
-            return array('result' => 'success', 'file' => ['file_name' => ""]);
-        } else {
-
-            if($this->upload->do_upload('foto')){
-                $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');      
+        
+            if($this->upload->do_upload( $name )){
+                $return = array(
+                    'result' => 'success', 
+                    'file' => $this->upload->data('file_name'), 
+                    'error' => '');      
                 return $return;
             }else{    
-                $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());return $return;   
+                $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+                return $return;   
             }  
-        }
+        
+           
     }
-    public function getInformasiUmum($id_general){
-        return $this->db->get_where('information_general',['id_general'=>$id_general])->row();
+
+
+    public function getInformasiUmum($id_umum){
+        return $this->db->get_where('informasi_umum',['id_umum'=>$id_umum])->row();
 	}
-    public function editDataInformasiUmum( $id_general){
+    
+    public function editDataInformasiUmum( $id_umum){
         
-        // ambil detail informasi
-        $ambilInformasiUmum = $this->getInformasiUmum( $id_general );
+       // ambil detail informasi
+       $ambilInformasiUmum = $this->getInformasiUmum( $id_umum );
         
-        // upload foto
-        $config['upload_path'] = './assets/Gambar/Upload/Informasi/';    
-        $config['allowed_types'] = 'jpg|png|jpeg';
-        $this->load->library('upload', $config);
+       // upload foto
+       $config['upload_path'] = './assets/Gambar/Upload/Informasi/';    
+       $config['allowed_types'] = 'jpg|png|jpeg';
+       $this->load->library('upload', $config);
+       $this->upload->initialize($config);
 
 
-        $foto = "";
-        // apabila dia ingin mengubah gambar 
-        if ( !empty( $_FILES['foto']['name'] ) ) {
+       $foto = "";
+       $berkas = "";
+       // apabila dia ingin mengubah gambar 
+       if ( !empty( $_FILES['foto']['name'] ) ) {
 
 
-            if ( $this->upload->do_upload('foto') ){
+           if ( $this->upload->do_upload('foto') ){
 
-                if ( $ambilInformasiUmum->foto ) { // remove old photo
+               if ( $ambilInformasiUmum->foto ) { // remove old photo
 
-                    $link = $config['upload_path']. $ambilInformasiUmum->foto;
-                    unlink( $link );
-                }
+                   $link = $config['upload_path']. $ambilInformasiUmum->foto;
+                   unlink( $link );
+               }
 
-                // set value new photo
-                $foto = $this->upload->data('file_name');
-                
-            }else{    
-                
-                // upload error
-                $html = '<div class="alert alert-warning"><b>Pemberitahuan</b> '.$this->upload->display_errors().'</div>';
-                $this->session->set_flashdata('msg', $html);
+               // set value new photo
+               $foto = $this->upload->data('file_name');
+               
+           }else{    
+               
+               // upload error
+               $html = '<div class="alert alert-warning"><b>Pemberitahuan</b> '.$this->upload->display_errors().'</div>';
+               $this->session->set_flashdata('msg', $html);
 
-                redirect('Admin/informasi_umum/edit/'. $id_general);
-                
-            }  
+               redirect('admin/informasi_umum/edit/'. $id_umum);
+               
+           }  
 
-        // gaambar tetap alias tidak diubah sama sekali
-        } else {
+       // gaambar tetap alias tidak diubah sama sekali
+       } else {
 
-            if ( $ambilInformasiUmum->foto ) {
+           if ( $ambilInformasiUmum->foto ) {
 
-                $foto = $ambilInformasiUmum->foto;
-            }
-        }
-        
-        // data informasi loker
-        $dataInformasiUmum =[
+               $foto = $ambilInformasiUmum->foto;
+           }
+       }
 
-            'nama_informasi'               => $this->input->post('nama_informasi', true),
-            'deskripsi_informasi'          => $this->input->post('deskripsi_informasi', true),
-            'status'                       => $this->input->post('status', true),
-            'foto'                         => $foto,
-		];
 
-        // update job_vacancy
-        $this->db->where('id_general', $id_general);	
-        $this->db->update('information_general', $dataInformasiUmum);
+       // apabila dia ingin mengubah dokumen 
+       if ( !empty( $_FILES['berkas']['name']) ) {
+
+           $conf_berkas_allowed = 'pdf|docx|doc';
+           $conf_berkas_size    = 10000;
+           $upload_berkas = $this->upload( $conf_berkas_allowed, $conf_berkas_size, 'berkas' );
+
+           if ( $upload_berkas['result'] == "success" ) {
+
+               $berkas = $upload_berkas['file'];
+
+               // hapus file lama 
+               if ( $ambilInformasiUmum->berkas ) { // remove old document
+
+                   $link = './assets/Gambar/Upload/Informasi/'. $ambilInformasiUmum->berkas;
+                   unlink( $link );
+               }
+           }
+       } else {
+
+           if ( $ambilInformasiUmum->berkas ) {
+
+               $berkas = $ambilInformasiUmum->berkas;
+           }
+       }
+       
+       // data informasi loker
+       $dataInformasiUmum =[
+
+           'nama_informasi'               => $this->input->post('nama_informasi', true),
+           'deskripsi_informasi'          => $this->input->post('deskripsi_informasi', true),
+           'status'                       => $this->input->post('status', true),
+           'foto'                         => $foto,
+           'berkas'                       => $berkas,
+       ];
+
+       // update loker
+       $this->db->where('id_umum', $id_umum);	
+       $this->db->update('informasi_umum', $dataInformasiUmum);
 
     }
 
 
 
     // porses hapus
-    function prosesHapusInformasiUmum( $id_general ){
+    function prosesHapusInformasiUmum( $id_umum ){
 
-        $this->db->where('id_general', $id_general)->delete('information_general');
+        $ambilInformasiUmum = $this->getInformasiUmum( $id_umum );
 
+                // hapus file lama 
+                if ( $ambilInformasiUmum->foto ) { // remove old document
+
+                    $link = './assets/Gambar/Upload/Informasi/'. $ambilInformasiUmum->foto;
+                    unlink( $link );
+                }
+                if ( $ambilInformasiUmum->berkas ) { // remove old document
+
+                    $link = './assets/Gambar/Upload/Informasi/'. $ambilInformasiUmum->berkas;
+                    unlink( $link );
+                }
+
+        $this->db->where('id_umum', $id_umum)->delete('informasi_umum');
     }
+
+   
 }
+
+
+
 
 /* End of file ModelName.php */
 ?>

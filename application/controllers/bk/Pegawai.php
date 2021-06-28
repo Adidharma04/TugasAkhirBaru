@@ -98,7 +98,7 @@ class Pegawai extends CI_Controller {
                         Data Pegawai berhasil di edit pada tanggal ' . date('d F Y H.i A') . '
                      </div>';
             $this->session->set_flashdata('msg', $html);
-            redirect('bk/pegawai', 'refresh');
+            redirect('bk/profile_bk', 'refresh');
         }
     }
     // Proses edit password data Pegawai

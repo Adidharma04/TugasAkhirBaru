@@ -1,8 +1,18 @@
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" >
+<!-- Wrapper -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+<div class="wrapper">
+<?php
+
+  $uriSegment = $this->uri->segment(2);
+
+?>
+
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="<?= base_url().'user/dashboard_user'?>" class="brand-link">
       <img src="<?= base_url().'assets/Gambar/Website/Title_SMA.png'?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">SMA Negeri Ploso</span>
     </a>
@@ -17,7 +27,7 @@
                       $img = "";
                       $sess_img = $this->session->userdata('sess_foto');
 
-                      if ( !$sess_img == "" ) {
+                      if ( $sess_img == "" ) {
 
                         // foto default 
                         if ( $this->session->userdata('sess_gender') == "laki" ) {
@@ -30,7 +40,7 @@
                       } else {
 
                         // terdapat foto
-                        $img = base_url('assets/Gambar/Upload/siswa/'. $sess_img);
+                        $img = base_url('assets/Gambar/Upload/Siswa/'. $sess_img);
                       }
                     ?>
 
@@ -38,7 +48,7 @@
 
         </div>
         <div class="info">
-          <a href="<?= base_url("Alumni/dashboard_alumni")?>" class="d-block"><?php echo ucfirst($this->session->userdata('sess_name')) ?></a>
+          <a href="<?= base_url("alumni/dashboard_alumni")?>" class="d-block"><?php echo ucfirst($this->session->userdata('sess_name')) ?></a>
         </div>
       </div>
 
@@ -48,35 +58,37 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
          
-          <li class="nav-item">
-            <a href="<?php echo base_url('Admin/dashboard_admin')?>" class="nav-link">
+          <li class="nav-item ">
+            <a href="<?php echo base_url('alumni/dashboard_alumni')?>" class="nav-link <?php if ($uriSegment == "dashboard_alumni") echo 'active'; ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
-          
-          <li class="nav-header">Tracer History</li>
+
+          <li class="nav-header">Diskusi</li>
           <li class="nav-item">
-            <a href="<?= base_url().''?>" class="nav-link">
-              <i class="nav-icon fa fa-graduation-cap"></i>
+            <a href="<?= base_url().'alumni/forum_diskusi'?>" class="nav-link <?php if ($uriSegment == "forum_diskusi") echo 'active'; ?>">
+              <i class="nav-icon far fa-comments"></i>
               <p>
-                Tracer Kuliah
+                Forum Diskusi
               </p>
             </a>
           </li>
+
+          <li class="nav-header">Tracer History</li>
           <li class="nav-item">
-            <a href="<?= base_url().''?>" class="nav-link">
+            <a href="<?= base_url('alumni/tracer').''?>" class="nav-link <?php if ($uriSegment == "tracer") echo 'active'; ?>">
               <i class="nav-icon fa fa-briefcase"></i>
               <p>
-               Tracer Kerja
+               Tracer
               </p>
             </a>
           </li>
           <li class="nav-header">INFORMASI</li>
           <li class="nav-item">
-            <a href="<?= base_url().'Alumni/Event'?>" class="nav-link">
+            <a href="<?= base_url().'alumni/event'?>" class="nav-link <?php if ($uriSegment == "event") echo 'active'; ?>">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Event
@@ -84,7 +96,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url().'Alumni/penilaian'?>" class="nav-link">
+            <a href="<?= base_url().'alumni/penilaian'?>" class="nav-link <?php if ($uriSegment == "penilaian") echo 'active'; ?>">
               <i class="nav-icon far fa-comments"></i>
               <p>
                 Kritik dan Saran
@@ -92,7 +104,7 @@
             </a>
           </li>
           <li class="nav-item">
-          <a href="<?= base_url().'Alumni/Informasi_umum'?>" class="nav-link">
+          <a href="<?= base_url().'alumni/informasi_umum'?>" class="nav-link <?php if ($uriSegment == "informasi_umum") echo 'active'; ?>">
               <i class="nav-icon far fa-newspaper-o"></i>
               <p>
                 Informasi Kuliah
@@ -100,7 +112,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url().'Alumni/sharing_loker'?>" class="nav-link">
+            <a href="<?= base_url().'alumni/sharing_loker'?>" class="nav-link <?php if ($uriSegment == "sharing_loker") echo 'active'; ?>">
               <i class="nav-icon fa fa-briefcase"></i>
               <p>
                 Lowongan Kerja

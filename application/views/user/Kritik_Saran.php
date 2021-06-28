@@ -30,7 +30,7 @@
     </div>
 
     <!-- <Header> -->
-    <?php $this->load->view('Template/User/navbar')?>
+    <?php $this->load->view('Template/user/navbar')?>
 
     <!-- <Body> -->
     <div class="breadcumb-area bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/breadcumb.jpg';?>);">
@@ -52,72 +52,20 @@
                 </div>
             </div>
             <div class="row">
-
+            <?php $no = 1; foreach ($penilaian->result() as $pnl) : ?>
                 <!-- Single Top Popular Course -->
                 <div class="col-12 col-lg-6">
                     <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
                         <div class="popular-course-content">
-                            <span>By Ika Wf   |  March 18, 2021</span>
-                            <p>Semoga Alumni SMAN Ploso bisa terus berkomunikasi lagi</p>
-                            <p>Tracer study ini sangat membantu</p>
-                        </div>
+                            <span >Oleh Alumni  |  Pada : <?= date('d F Y', strtotime($pnl->created_at)) ?></span>
+                            <p> Kritik : <br>  <?= $pnl->kritik ?></p>
+                            <p> Saran  : <br> <?= $pnl->saran ?></p>
+                    </div>
+                    <div class="popular-course-thumb bg-img" style="background-image: url(<?php echo base_url().'assets/Gambar/Website/Dashboard/kritiksaran.png';?>);"></div>
                     </div>
                 </div>
-
-                <!-- Single Top Popular Course -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <span>By Ika Wf   |  March 18, 2021</span>
-                            <p>Semoga Alumni SMAN Ploso bisa terus berkomunikasi lagi</p>
-                            <p>Tracer study ini sangat membantu</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Top Popular Course -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <span>By Ika Wf   |  March 18, 2021</span>
-                            <p>Semoga Alumni SMAN Ploso bisa terus berkomunikasi lagi</p>
-                            <p>Tracer study ini sangat membantu</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Top Popular Course -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <span>By Ika Wf   |  March 18, 2021</span>
-                            <p>Semoga Alumni SMAN Ploso bisa terus berkomunikasi lagi</p>
-                            <p>Tracer study ini sangat membantu</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Top Popular Course -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <span>By Ika Wf   |  March 18, 2021</span>
-                            <p>Semoga Alumni SMAN Ploso bisa terus berkomunikasi lagi</p>
-                            <p>Tracer study ini sangat membantu</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Top Popular Course -->
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <span>By Ika Wf   |  March 18, 2021</span>
-                            <p>Semoga Alumni SMAN Ploso bisa terus berkomunikasi lagi</p>
-                            <p>Tracer study ini sangat membantu</p>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach ?>
+            </div>
         </div>
     </div>
     <!-- ##### Top Popular Courses Area End ##### -->
@@ -129,7 +77,7 @@
                 <div class="col-12">
                     <div class="cta-content d-flex align-items-center justify-content-between flex-wrap">
                         <h3>Tambahkan kritik dan saranmu untuk Smanis Tracer Study</h3>
-                        <a href="#" class="btn academy-btn">Add!</a>
+                        <a href="<?php base_url().'admin/login'?>" class="btn academy-btn">Add!</a>
                     </div>
                 </div>
             </div>
@@ -137,7 +85,7 @@
     </div>
     <!-- ##### Course Area End ##### -->       
     <!-- <footer> -->
-    <?php $this->load->view('Template/User/footer')?>
+    <?php $this->load->view('Template/user/footer')?>
 </body>
 
 </html>

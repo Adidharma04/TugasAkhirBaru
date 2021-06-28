@@ -8,7 +8,7 @@ class Login extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->helper('form');
-        $this->load->model('Admin/login_model');        
+        $this->load->model('admin/Login_model');        
     }
     public function index()
     {
@@ -28,9 +28,9 @@ class Login extends CI_Controller {
 
         if( $this->form_validation->run() == FALSE ){
 
-            $this->load->view('Template/Login_register/header.php');
-            $this->load->view('Admin/login/index', $data);
-            $this->load->view('Template/Login_register/footer.php');
+            $this->load->view('Template/login_register/header.php');
+            $this->load->view('admin/login/index', $data);
+            $this->load->view('Template/login_register/footer.php');
             
         }else{
             $this->_prosesAkunLogin();
@@ -47,7 +47,7 @@ class Login extends CI_Controller {
         $password = $this->input->post('password');
 
         // call model
-        $ambilDataProfile = $this->login_model->getDataLogin( $username );
+        $ambilDataProfile = $this->Login_model->getDataLogin( $username );
 
         // check account registered
         if ( $ambilDataProfile->num_rows() == 1 ) {
@@ -70,27 +70,31 @@ class Login extends CI_Controller {
                 if ( ($kolom['level'] == "staff") || ($kolom['level'] == "bk") ) {
 
                     $id_profile = $kolom['id_profile'];
-                    $getDataInformationEmployee = $this->login_model->getDataEmployeeBy_IdLogin( $id_profile );
+                    $getDataInformationEmployee = $this->Login_model->getDataEmployeeBy_IdLogin( $id_profile );
 
-                    $kolomEmployee = $getDataInformationEmployee->row_array();
                     if ( $getDataInformationEmployee->num_rows() == 0 ) {
                         
                         $this->session->set_userdata('sess_name', $kolom['username']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolom['id_profile']);
                     } else {
 
+                        $kolomEmployee = $getDataInformationEmployee->row_array();
+
                         $this->session->set_userdata('sess_name', $kolomEmployee['nama']);
+                        
+                        $this->session->set_userdata('sess_id_pegawai', $kolomEmployee['id_pegawai']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolomEmployee['tanggal_lahir']);
                         $this->session->set_userdata('sess_alamat', $kolomEmployee['alamat']);
                         $this->session->set_userdata('sess_email', $kolomEmployee['email']);
                         $this->session->set_userdata('sess_telfon', $kolomEmployee['no_telfon']);
+                        $this->session->set_userdata('sess_jenis_kelamin', $kolomEmployee['jenis_kelamin']);
                     }
                 }
 
                 if ( ($kolom['level'] == "bk") || ($kolom['level'] == "bk") ) {
 
                     $id_profile = $kolom['id_profile'];
-                    $getDataInformationEmployeeBK = $this->login_model->getDataEmployeeBKBy_IdLogin( $id_profile );
+                    $getDataInformationEmployeeBK = $this->Login_model->getDataEmployeeBKBy_IdLogin( $id_profile );
 
                     $kolomEmployeeBK = $getDataInformationEmployeeBK->row_array();
                     if ( $getDataInformationEmployeeBK->num_rows() == 0 ) {
@@ -98,30 +102,32 @@ class Login extends CI_Controller {
                         $this->session->set_userdata('sess_name', $kolom['username']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolom['id_profile']);
                     } else {
-
+                        $this->session->set_userdata('sess_id_pegawai', $kolomEmployeeBK['id_pegawai']);
                         $this->session->set_userdata('sess_name', $kolomEmployeeBK['nama']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolomEmployeeBK['tanggal_lahir']);
                         $this->session->set_userdata('sess_alamat', $kolomEmployeeBK['alamat']);
                         $this->session->set_userdata('sess_email', $kolomEmployeeBK['email']);
                         $this->session->set_userdata('sess_telfon', $kolomEmployeeBK['no_telfon']);
+                        $this->session->set_userdata('sess_jenis_kelamin', $kolomEmployeeBK['jenis_kelamin']);
                     }
                 }
 
                 if ( ($kolom['level'] == "alumni")  ) {
 
                     $id_profile = $kolom['id_profile'];
-                    $getDataInformationAlumni = $this->login_model->getDataAlumniBy_IdLogin( $id_profile );
+                    $getDataInformationAlumni = $this->Login_model->getDataAlumniBy_IdLogin( $id_profile );
 
-                    $kolomAlumni = $getDataInformationAlumni->row_array();
                     if ( $getDataInformationAlumni->num_rows() == 0 ) {
                         
                         $this->session->set_userdata('sess_name', $kolom['username']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolom['id_profile']);
                     } else {
 
+                        $kolomAlumni = $getDataInformationAlumni->row_array();
                         $this->session->set_userdata('sess_name', $kolomAlumni['nama']);
+                        $this->session->set_userdata('sess_id_profile', $kolomAlumni['id_profile']);
                         $this->session->set_userdata('sess_nis', $kolomAlumni['nis']);
-                        $this->session->set_userdata('sess_id_student', $kolomAlumni['id_student']);
+                        $this->session->set_userdata('sess_id_siswa', $kolomAlumni['id_siswa']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolomAlumni['tanggal_lahir']);
                         $this->session->set_userdata('sess_alamat', $kolomAlumni['alamat']);
                         $this->session->set_userdata('sess_email', $kolomAlumni['email']);
@@ -134,15 +140,16 @@ class Login extends CI_Controller {
                 if ( ($kolom['level'] == "siswa")  ) {
 
                     $id_profile = $kolom['id_profile'];
-                    $getDataInformationSiswa = $this->login_model->getDataSiswaBy_IdLogin( $id_profile );
+                    $getDataInformationSiswa = $this->Login_model->getDataSiswaBy_IdLogin( $id_profile );
 
-                    $kolomSiswa = $getDataInformationSiswa->row_array();
+                    
                     if ( $getDataInformationSiswa->num_rows() == 0 ) {
                         
                         $this->session->set_userdata('sess_name', $kolom['username']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolom['id_profile']);
                     } else {
 
+                        $kolomSiswa = $getDataInformationSiswa->row_array();
                         $this->session->set_userdata('sess_name', $kolomSiswa['nama']);
                         $this->session->set_userdata('sess_tanggal_lahir', $kolomSiswa['tanggal_lahir']);
                         $this->session->set_userdata('sess_alamat', $kolomSiswa['alamat']);
@@ -160,7 +167,7 @@ class Login extends CI_Controller {
                 switch ( $kolom['level'] ) {
 
                     case "staff":
-                        redirect("admin/dashboard_admin");
+                        redirect("admin/profile_admin");
                         break;
 
                     case "bk";
@@ -171,7 +178,7 @@ class Login extends CI_Controller {
                         redirect("siswa/dashboard_siswa");
                         break;
                     case "alumni":
-                        redirect("Alumni/dashboard_alumni");
+                        redirect("alumni/dashboard_alumni");
                         break;
                 }
                 /// ................
@@ -186,7 +193,7 @@ class Login extends CI_Controller {
                          <center>
                          </div>';
                 $this->session->set_flashdata('msg', $html);
-                redirect("Admin/login");
+                redirect("admin/login");
             }
 
 
@@ -200,14 +207,14 @@ class Login extends CI_Controller {
                     <center>
                     </div>';
             $this->session->set_flashdata('msg', $html);
-            redirect("Admin/login");
+            redirect("admin/login");
         }
 
     }
 
     public function logout(){
         $this->session->sess_destroy();
-        redirect('Admin/login', 'refresh');
+        redirect('user/dashboard_user', 'refresh');
     }
 
 }

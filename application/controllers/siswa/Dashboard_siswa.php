@@ -13,14 +13,14 @@ class Dashboard_siswa extends CI_Controller {
                         <small>Anda harus login terlebih dahulu !</small>
                     </div>';
             $this->session->set_flashdata('msg', $html);
-            redirect("Admin/login");
+            redirect("admin/login");
         }if($this->session->userdata('sess_level') != "siswa"){
             $session_destroy = $this->session->sess_destroy();
             $html = '<div class="alert alert-warning"><b>Pemberitahuan</b> <br> 
                     <small>Anda Bukan Siswa!</small>
                 </div>';
             $this->session->set_flashdata('msg', $html,$session_destroy);
-            redirect('Admin/login', 'refresh');
+            redirect('admin/login', 'refresh');
         }
     }
 
@@ -30,10 +30,7 @@ class Dashboard_siswa extends CI_Controller {
         $data ['title'] = 'Halaman Dashboard | Siswa';
         //----------------------------
 
-        $this->load->view('Template/siswa/navbar_siswa',$data);
-        $this->load->view('Template/siswa/sidebar_siswa',$data);
-        $this->load->view('siswa/dashboard_siswa/index',$data);
-        $this->load->view('Template/siswa/footer_siswa');
+        $this->load->view('siswa/dashboard_siswa/index');
     }
 
 }

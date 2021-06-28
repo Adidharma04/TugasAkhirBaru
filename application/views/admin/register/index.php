@@ -7,26 +7,28 @@
 
                     <div class="signup-form">
                         <p><img width="100px" src="<?= base_url() . 'assets/Gambar/Website/Title_SMA.png'; ?>"></p>
+                        <br><br>
                         <p>
-                            Selamat Datang di Sistem Pencatatan Ikatan Alumni
+                            Selamat Datang di Smanis Tracer Study
                             <br>
                             <br>
-                            Silahkan isi data kalian, sesuai dengan syarat berikut ini:
+                            Silahkan melakukan registrasi ulang!
                             <br>
                             <br>
-                            <li> Masukkan Nama Panjang anda</li>
+                            <li> Masukkan NIS Anda</li>
                             <br>
-                            <li> Masukkan Email anda</li>
+                            <li> Pilih cek NIS, tunggu data anda terbaca</li>
                             <br>
-                            <li> Masukkan NIS anda</li>
+                            <li> Jika data anda benar, Klik Registrasi Alumni</li>
                             <br>
-                            <li> Masukkan Password 6 karakter atau lebih</li>
+                            <li> Tunggu proses registrasi selesai</li>
+                            <br>
+                            <li> Silahkan cek email anda.</li>
                             <br>
                             <b>
-                                <font color="black" size="2px">Note : (<font color="red" size="4px">*</font>) wajib diisi</font>
+                                <font color="black" size="2px">Note : Tunggu proses persetujuan alumni!</font>
                             </b>
                         </p>
-                        <a href="<?= base_url() . 'Admin/login'; ?>" class="signup-image-link">I am already account</a>
                     </div>
 
                     <div class="signup-form">
@@ -124,7 +126,7 @@
                 $.ajax({
 
                     type: "GET", // type {GET, POST}
-                    url: base_url + 'Admin/register/checkDataNIS', // link 
+                    url: base_url + 'admin/register/checkDataNIS', // link 
                     data: 'nis=' + nis, // data yang dikirim
                     dataType: "json",
 
@@ -145,7 +147,7 @@
                         } else {
 
 
-                            alert("Kosong atau nis tidak terdaftar");
+                            alert(result.pesan);
                             $('input[name="no_induk"]').css('border-bottom', '1px solid red');
                         }
 
@@ -200,7 +202,7 @@
                 $.ajax({
 
                     type : "POST",
-                    url  : base_url + 'Admin/register/prosesRegistrasiSiswa',
+                    url  : base_url + 'admin/register/prosesRegistrasiSiswa',
                     data : $(this).serialize(), // get all attribute name with value | no_induk=1868135063&email=ika@gmail.com
                     dataType : "json",
 
@@ -213,12 +215,12 @@
                             showConfirmButton: true,
                         }).then( function( isConfirm ) {
 
-                            window.location.href = base_url + 'User/dashboard_user';
+                            window.location.href = base_url + 'user/dashboard_user';
                         } );
                     }
                 });
 
-                alert();
+                
 
 
             } else {

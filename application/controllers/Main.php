@@ -8,7 +8,7 @@
     
         public function index(){
             
-            redirect('User/dashboard_user');
+            redirect('user/dashboard_user');
         }
     
     }

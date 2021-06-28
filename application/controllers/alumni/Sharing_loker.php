@@ -7,7 +7,7 @@ class sharing_loker extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('Alumni/sharing_loker_model');
+        $this->load->model('alumni/Sharing_loker_model');
         if ( empty( $this->session->userdata('sess_id_profile') ) ) {
             $html = '<div class="alert alert-warning"><b>Pemberitahuan</b> <br> 
                         <small>Anda harus login terlebih dahulu !</small>
@@ -17,7 +17,7 @@ class sharing_loker extends CI_Controller {
         }if($this->session->userdata('sess_level') != "alumni"){
             $session_destroy = $this->session->sess_destroy();
             $html = '<div class="alert alert-warning"><b>Pemberitahuan</b> <br> 
-                    <small>Anda Bukan Alumni!</small>
+                    <small>Anda Bukan alumni!</small>
                 </div>';
             $this->session->set_flashdata('msg', $html,$session_destroy);
             redirect('Admin/login', 'refresh');
@@ -27,22 +27,94 @@ class sharing_loker extends CI_Controller {
     public function index()
     {
         //-- Title Halaman
-        $data ['title'] = 'Halaman Sharing Loker | Alumni';
+        $data ['title'] = 'Halaman Sharing Loker | alumni';
         //----------------------------
-        $data['job_vacancy'] = $this->sharing_loker_model->tampilDataLoker(); 
-        $this->load->view('Template/Alumni/navbar_alumni',$data);
-        $this->load->view('Template/Alumni/sidebar_alumni',$data);
-        $this->load->view('Alumni/sharing_loker/index',$data);
-        $this->load->view('Template/Alumni/footer_alumni');  
+        $data['loker'] = $this->Sharing_loker_model->tampilDataLoker(); 
+        $this->load->view('Template/alumni/navbar_alumni',$data);
+        $this->load->view('Template/alumni/sidebar_alumni',$data);
+        $this->load->view('alumni/sharing_loker/index',$data);
+        $this->load->view('Template/alumni/footer_alumni');  
     }
+    public function tambah()
+    {
+        //-- rule--//
+        $this->form_validation->set_rules('nama_pekerjaan', 'Nama Pekerjaan', 'required|trim',[
+            'required' => 'Masukkan Nama Pekerjaan',
+        ]);
 
-    public function tambah(){
-         //-- Title Halaman
-         $data ['title'] = 'Halaman Tambah Sharing Loker | Alumni';
-         //----------------------------
+        $this->form_validation->set_rules('deskripsi_pekerjaan', 'Deskripsi Pekerjaan', 'required|trim',[
+            'required' => 'Masukkan Deskripsi',
+        ]);
 
-         //-- rule--//
-         $this->form_validation->set_rules('nama_pekerjaan', 'Nama Pekerjaan', 'required|trim',[
+
+        $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim',[
+            'required' => 'Masukkan Alamat Perusahaan',
+        ]);
+        //----------------------------------------------------------------------
+        
+        //-- Title Halaman
+         $data ['title'] = 'Halaman Admin-Dashboard';
+        //----------------------------
+        $data['loker'] = $this->Sharing_loker_model->tampilDataLoker(); 
+        if($this->form_validation->run() == FALSE){
+            $this->load->view('Template/alumni/navbar_alumni',$data);
+            $this->load->view('Template/alumni/sidebar_alumni',$data);
+            $this->load->view('alumni/sharing_loker/tambah',$data);
+            $this->load->view('Template/alumni/footer_alumni');  
+        }else{
+            $conf_foto_allowed = 'jpg|jpeg|png';
+            $conf_foto_size    = 3000;
+
+
+            $conf_berkas_allowed = 'pdf|docx|doc';
+            $conf_berkas_size    = 10000;
+
+            
+            $upload_foto = $this->Sharing_loker_model->upload( $conf_foto_allowed, $conf_foto_size, 'foto' );
+            $upload_berkas = $this->Sharing_loker_model->upload( $conf_berkas_allowed, $conf_berkas_size, 'berkas' );
+            
+            $cek_file_foto = $_FILES['foto']['name'];
+            $cek_file_berkas = $_FILES['berkas']['name'];
+
+            if ( !empty( $cek_file_foto ) || !empty( $cek_file_berkas )  ) {
+                if ($upload_foto['result'] == 'success' || $upload_berkas['result'] == 'success') {
+                    $this->Sharing_loker_model->tambahDataLoker($upload_foto,$upload_berkas);
+                    $html = '<div class="alert alert-success">
+                                <a href="sharing_loker" class="close" data-dismiss="alert" >&times;</a>
+                                <b>Pemberitahuan</b> <br>
+                                Data Loker berhasil di tambah pada tanggal ' . date('d F Y H.i A') . '
+                            </div>';
+                    $this->session->set_flashdata('msg', $html);
+                    redirect('alumni/sharing_loker','refresh');
+                }else{
+                    echo $upload_foto['error'];
+                    echo '<hr>';
+                    echo $upload_berkas['error'];
+                }
+            }else{
+                // dokumen yang kosong
+                $upload_foto['file'] = null;
+                $upload_berkas['file'] = null;
+
+                $this->Sharing_loker_model->tambahDataLoker($upload_foto, $upload_berkas);
+                
+                $html = '<div class="alert alert-success">
+                                <a href="sharing_loker" class="close" data-dismiss="alert" >&times;</a>
+                                <b>Pemberitahuan</b> <br>
+                                Data Loker berhasil di tambah pada tanggal ' . date('d F Y H.i A') . '
+                            </div>';
+                    $this->session->set_flashdata('msg', $html);
+    
+    
+                redirect('alumni/sharing_loker');
+            }
+        }
+    }
+    public function edit($id_loker){
+
+        $getDataLokerById = $this->Sharing_loker_model->getLoker($id_loker);
+
+        $this->form_validation->set_rules('nama_pekerjaan', 'Nama Pekerjaan', 'required|trim',[
             'required' => 'Masukkan Nama Pekerjaan',
         ]);
 
@@ -53,30 +125,42 @@ class sharing_loker extends CI_Controller {
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim',[
             'required' => 'Masukkan Alamat Perusahaan',
         ]);
-        //----------------------------------------------------------------------
         
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('Template/Alumni/navbar_alumni',$data);
-            $this->load->view('Template/Alumni/sidebar_alumni',$data);
-            $this->load->view('Alumni/sharing_loker/tambah',$data);
-            $this->load->view('Template/Alumni/footer_alumni');
-        }else{
-            $upload = $this->sharing_loker_model->upload();
-            if ($upload['result'] == 'success') {
-                $this->sharing_loker_model->tambahDataLoker($upload);
-                $html = '<div class="alert alert-success">
-                                <a href="siswa" class="close" data-dismiss="alert" >&times;</a>
-                                <b>Pemberitahuan</b> <br>
-                                Data Sharing Loker berhasil di tambah pada tanggal ' . date('d F Y H.i A') . '
-                         </div>';
-                $this->session->set_flashdata('msg', $html);
-                redirect('Alumni/sharing_loker', 'refresh');
-            } else {
-                echo $upload['error'];
-            }
+        //----------------------------------------------------------------------
+        //-- Title Halaman
+        $data ['title'] = 'Halaman Admin-Dashboard';
+        //----------------------------
+        $data ['loker'] = $getDataLokerById;
+        if($this->form_validation->run() == FALSE){
+            $this->load->view('Template/alumni/navbar_alumni',$data);
+            $this->load->view('Template/alumni/sidebar_alumni',$data);
+            $this->load->view('alumni/sharing_loker/edit',$data);
+            $this->load->view('Template/alumni/footer_alumni');  
         }
+        else{
+            $this->Sharing_loker_model->editDataLoker( $id_loker );
+            $html = '<div class="alert alert-success">
+                        <a href="sharing_loker" class="close" data-dismiss="alert" >&times;</a>
+                        <b>Pemberitahuan</b> <br>
+                        Data Loker berhasil di edit pada tanggal ' . date('d F Y H.i A') . '
+                    </div>';
+            $this->session->set_flashdata('msg', $html);
+            redirect('alumni/sharing_loker','refresh');
+        }
+    } 
+    // proses hapus siswa
+    function onDelete( $id_loker ) {
 
-    }
+        $this->Sharing_loker_model->prosesHapusLoker( $id_loker );
+        $html = '<div class="alert alert-success">
+                     <b>Pemberitahuan</b> 
+                     <br>
+                     Data Loker berhasil terhapus pada tanggal '.date('d F Y H.i A').'
+                     </div>';
+            $this->session->set_flashdata('msg', $html);
+            redirect('alumni/sharing_loker','refresh');
+    } 
+    
 
 
 }
