@@ -22,6 +22,10 @@
             }
             action();
         </script>
+
+        <?php 
+        $tanggal_sekarang = date('Y-m-d');
+        ?>
 </head>
 <body>
     <!-- ##### Preloader ##### -->
@@ -53,24 +57,26 @@
             </div>
             <div class="row">
                 <?php $no = 1; foreach ($event as $evn) : ?>
-                <?php if ($evn->status == "accept") : ?>
-                    <div class="col-12 col-lg-6">
-                        <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                            <div class="popular-course-content">
-                                <h5><?= $evn->nama_event ?></h5>
-                                <span><?= $evn->lokasi ?>  |  <?= $evn->tanggal_event ?></span>
-                                <p><?= $evn->deskripsi_event ?></p>
+                    <?php if ($evn->status == "accept") : ?>
+                        <?php if ( $tanggal_sekarang < $evn->tanggal_event ) : ?>
+                        <div class="col-12 col-lg-6">
+                            <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
+                                <div class="popular-course-content">
+                                    <h5><?= $evn->nama_event ?></h5>
+                                    <span><?= $evn->lokasi ?>  |  <?= $evn->tanggal_event ?></span>
+                                    <p><?= $evn->deskripsi_event ?></p>
+                                </div>
+                                <div class="popular-course-thumb bg-img" style="background-image: url(
+                                    <?php if($evn->foto == "") : ?>
+                                    <?= base_url('assets/Gambar/Website/default_event.png') ?>
+                                    <?php else : ?>
+                                        <?= base_url('assets/Gambar/Upload/Event/') . $evn->foto ?>
+                                    <?php endif?>);"></div>
                             </div>
-                            <div class="popular-course-thumb bg-img" style="background-image: url(
-                                <?php if($evn->foto == "") : ?>
-                                <?= base_url('assets/Gambar/Website/default_event.png') ?>
-                                <?php else : ?>
-                                    <?= base_url('assets/Gambar/Upload/Event/') . $evn->foto ?>
-                                <?php endif?>);"></div>
+                        <?php endif ?>
                         </div>
-                    </div>
+                    <?php endif ?>
                     
-                <?php endif ?>
                 <!-- Single Top Popular Course -->
                 
                 <?php endforeach ?>
