@@ -86,13 +86,13 @@
                         /** C. Tampung Nilai */
                         array_push( $tampungNilai, array(
 
-                            'id_forum' => $info_detail['id_forum'],
-                            'id_detail_forum' => $info_detail['id_detail_forum'],
-                            'id_profile' => $info_detail['id_profile'],
+                            'id_forum' => $row['id_forum'],
+                            'id_detail_forum' => $row['id_detail_forum'],
+                            'id_profile' => $row['id_profile'],
                             'nama'            => $info_detail['nama'],
                             'username'      => $info_detail['username'],
-                            'notes'         => $info_detail['notes'],
-                            'created_at'    => $info_detail['created_at']
+                            'notes'         => $row['notes'],
+                            'created_at'    => $row['created_at']
                         ) );
                         
                     } else if ( $row['level'] == "staff" || $row['level'] == "bk" ) {
@@ -107,13 +107,13 @@
                         /** C. Tampung Nilai */
                         array_push( $tampungNilai, array(
 
-                            'id_forum' => $info_detail['id_forum'],
-                            'id_profile' => $info_detail['id_profile'],
-                            'id_detail_forum' => $info_detail['id_detail_forum'],
+                            'id_forum' => $row['id_forum'],
+                            'id_profile' => $row['id_profile'],
+                            'id_detail_forum' => $row['id_detail_forum'],
                             'nama'            => $info_detail['nama'],
                             'username'      => $info_detail['username'],
-                            'notes'         => $info_detail['notes'],
-                            'created_at'    => $info_detail['created_at']
+                            'notes'         => $row['notes'],
+                            'created_at'    => $row['created_at']
                         ) );
                     }
                 }
